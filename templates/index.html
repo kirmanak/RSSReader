@@ -5,6 +5,14 @@
     <title>Useless RSS reader</title>
 </head>
 <body>
-<p>Hello, world!</p>
+{% for post in posts %}
+    <div>
+        <p>{{ post.title }}</p>
+        <p>{{ post.description|safe }}</p>
+        <p>{{ post.link }}</p>
+        <p>{{ post.date }}</p>
+        <p>{{ post.author }}</p>
+    </div>
+{% endfor %}
 </body>
 </html>

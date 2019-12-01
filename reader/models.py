@@ -3,8 +3,8 @@ from django.db import models
 
 # Create your models here.
 class Feed(models.Model):
-    name = models.CharField(max_length=200)
-    url = models.URLField()
+    name = models.CharField(max_length=200, unique=True, blank=False, null=False)
+    url = models.URLField(unique=True, blank=False, null=False)
 
     def as_dist(self):
         return {
@@ -18,12 +18,12 @@ class Feed(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200)
-    feed = models.ForeignKey('Feed', on_delete=models.CASCADE)
-    description = models.TextField()
-    link = models.URLField()
-    date = models.DateTimeField()
+    title = models.CharField(max_length=200, blank=False, null=False)
+    author = models.CharField(max_length=200, blank=False, null=False)
+    feed = models.ForeignKey('Feed', blank=False, null=False, on_delete=models.CASCADE)
+    description = models.TextField(blank=False, null=False)
+    link = models.URLField(unique=True, blank=False, null=False)
+    date = models.DateTimeField(blank=False, null=False)
 
     def as_dist(self):
         return {

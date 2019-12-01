@@ -1,10 +1,28 @@
+from datetime import datetime
+
 from django.db import models
+from django.utils.timezone import utc
+from feedparser import parse
 
 
 # Create your models here.
 class Feed(models.Model):
     name = models.CharField(max_length=200, unique=True, blank=False, null=False)
     url = models.URLField(unique=True, blank=False, null=False)
+
+    def fetch(self):
+        feed_dict = parse(self.url)
+        for entry in feed_dict['entries']:
+            # if there are no posts with such a link
+            if not Post.objects.filter(link=entry['link']).count():
+                Post.objects.create(
+                    title=entry['title'],
+                    author=entry['author'],
+                    feed=self,
+                    description=entry['summary'],
+                    link=entry['link'],
+                    date=datetime(*entry.published_parsed[:6], tzinfo=utc)
+                )
 
     def as_dist(self):
         return {

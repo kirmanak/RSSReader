@@ -14,7 +14,7 @@ class Feed(models.Model):
         feed_dict = parse(self.url)
         for entry in feed_dict['entries']:
             # if there are no posts with such a link
-            if not Post.objects.filter(link=entry['link']).count():
+            if Post.objects.filter(link=entry['link']).count() == 0:
                 Post.objects.create(
                     title=entry['title'],
                     author=entry['author'],

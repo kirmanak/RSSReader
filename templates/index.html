@@ -6,13 +6,13 @@
 </head>
 <body>
 {% for post in posts %}
-    <div>
+    <hr>
         <p>{{ post.title }}</p>
         <p>{{ post.description|safe }}</p>
         <p>{{ post.link }}</p>
         <p>{{ post.date }}</p>
         <p>{{ post.author }}</p>
-    </div>
+    <hr>
 {% endfor %}
 </body>
 </html>

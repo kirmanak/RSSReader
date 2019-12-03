@@ -40,7 +40,6 @@ def feed_posts(request: HttpRequest) -> HttpResponse:
         return JsonResponse(body, status=code)
 
     return JsonResponse({
-        'feed': feed.as_dist(),
         'posts': [post.as_dist() for post in Post.objects.filter(feed=feed)]
     })
 
